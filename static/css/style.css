@@ -5,3 +5,22 @@
 .flashes h4 {
     line-height: 2;
 }
+
+.btn-floating {
+    margin: 5px;
+}
+
+.btn-floating i {
+    margin-right: 0;
+    margin-left: 6px;
+}
+
+.collapsible-header .col strong {
+    margin: 5px;
+    line-height: 42px;
+}
+
+/* want to make the buttons display all the way to the right */
+/* .collapsible-header .col .s3 {
+    right: 0;
+} */
