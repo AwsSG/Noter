@@ -10,9 +10,13 @@
             <div class="input-field col s12">
                 <i class="fas fa-folder-open prefix amber-text text-darken-4"></i>
                 <select id="category_name" name="category_name" class="validate" required>
-                    <option value="" disabled selected>Choose category</option>
+                    <option value="" disabled>Choose category</option>
                     {% for category in categories %}
+                    {% if category.category_name == task.category_name %}
+                    <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
+                    {% else %}
                     <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
                 <label for="category_name">Task Category</label>
@@ -22,8 +26,8 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fas fa-pencil-alt prefix amber-text text-darken-4"></i>
-                <input id="task_name" name="task_name" minlength="5" maxlength="50" type="text" class="validate"
-                    required>
+                <input id="task_name" value="{{ task.task_name }}" name="task_name" minlength="5" maxlength="50"
+                    type="text" class="validate" required>
                 <label for="task_name">Task Name</label>
             </div>
         </div>
@@ -32,7 +36,7 @@
             <div class="input-field col s12">
                 <i class="fas fa-align-left prefix amber-text text-darken-4"></i>
                 <textarea id="task_desc" name="task_desc" minlength="5" maxlength="200"
-                    class="materialize-textarea validate" required></textarea>
+                    class="materialize-textarea validate" required>{{- task.task_desc -}}</textarea>
                 <label for="task_desc">Task Description</label>
             </div>
         </div>
@@ -40,7 +44,8 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fas fa-calendar-alt prefix amber-text text-darken-4"></i>
-                <input id="due_date" name="due_date" type="text" class="datepicker validate" required>
+                <input id="due_date" name="due_date" type="text" class="datepicker validate" value="{{ task.due_date }}"
+                    required>
                 <label for="due_date">Due Date</label>
             </div>
         </div>
@@ -50,7 +55,11 @@
                 <div class="switch">
                     <i class="fas fa-exclamation-circle amber-text text-darken-4"></i>
                     <label for="is_urgent">
-                        <input type="checkbox" id="is_urgent" name="is_urgent">
+                        {% if task.is_urgent == "on" %}
+                            <input type="checkbox" id="is_urgent" name="is_urgent" checked>
+                        {% else %}
+                            <input type="checkbox" id="is_urgent" name="is_urgent">
+                        {% endif %}
                         <span class="lever"></span>
                         Is urgent
                     </label>
@@ -60,6 +69,9 @@
         <!-- submit button -->
         <div class="row">
             <div class="col s12 center-align">
+                <a href="{{ url_for('get_tasks') }}" class="btn-large text-shadow red darken-4">
+                    Cancel <i class="fas fa-times-circle right"></i>
+                </a>
                 <button type="submit" class="btn-large text-shadow amber darken-4">
                     Edit Task <i class="fas fa-edit right"></i>
                 </button>
